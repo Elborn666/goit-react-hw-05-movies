@@ -1,11 +1,29 @@
-.back_link{}
-.container{}
-.img{}
-.title{}
-.rating{}
-.overview{}
-.description{}
-.genres{}
-.desc_style{}
-.list{}
-.item{}
+.back_link {
+    width: 1800px;
+    margin: 0 auto;
+    padding: 15px;
+}
+.container {
+    width: 1800px;
+    margin: 0 auto;
+    padding: 15px;
+    font-size: 16px;
+}
+
+.img {}
+
+.title {}
+
+.rating {}
+
+.overview {}
+
+.description {}
+
+.genres {}
+
+.desc_style {}
+
+.list {}
+
+.item {}
