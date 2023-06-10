@@ -1,20 +1,21 @@
+import { useState ,useEffect } from "react";
+import { getTrendingMovies } from "services/getMovies"
+import FilmList from "components/FilmList/FilmList";
+
 // import css from './Movise.module.css'
 function Home () {
+    const [movies, setMovies] = useState([]);
 
-    const options = {
-        method: 'GET',
-        headers: {
-          accept: 'application/json',
-          Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjMzdiMDM5MTk5YWE2MGZmYTY4YmUxMWI5OTM2NWY5NSIsInN1YiI6IjY0ODQ2MDViZTM3NWMwMDBlMjRmMzcxZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.WBcczLWx8_WbmLgzi6Hbjia-fy2ltDJu3z-UM205P04'
-        } };
-    
-    
-    const getTrending = () => {      
-          fetch('https://api.themoviedb.org/3/trending/all/day?language=en-US', options)
-            .then(response => response.json())
-            .then(response => console.log(response))
-            .catch(err => console.error(err));
-    }
+    useEffect(() => {
+        getTrendingMovies('').then(setMovies);
+    },[])
+
+
+    return (
+        <div className="css.container">
+            <FilmList movies={movies} />
+        </div>
+    )
 
 }
 

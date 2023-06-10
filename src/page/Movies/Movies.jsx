@@ -1,39 +1,36 @@
-import css from './Movise.module.css'
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { getMovieByQuery } from 'services/getMovies';
+import Form from "components/Form/Form";
+import FilmList from 'components/FilmList/FilmList';
+// import css from './Movise.module.css'
+
 
 const Movies = () => {
+  const [movies, setMovies] = useState([]);
+  const [searchParams, setSearchParams] = useSearchParams();
 
-    const options = {
-        method: 'GET',
-        headers: {
-          accept: 'application/json',
-          Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjMzdiMDM5MTk5YWE2MGZmYTY4YmUxMWI5OTM2NWY5NSIsInN1YiI6IjY0ODQ2MDViZTM3NWMwMDBlMjRmMzcxZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.WBcczLWx8_WbmLgzi6Hbjia-fy2ltDJu3z-UM205P04'
-        }
-      };
-      
-      fetch('https://api.themoviedb.org/3/search/movie?include_adult=false&language=en-US&page=1', options)
-        .then(response => response.json())
-        .then(response => console.log(response))
-        .catch(err => console.error(err));
+  useEffect(() => {
+    const currentQuery = searchParams.get('query');
+    if (!currentQuery) return;
 
+    const fetchMovieByQuery = async () => {
+      try {
+        const movieByQuery = await getMovieByQuery(currentQuery);
+        setMovies(movieByQuery);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchMovieByQuery();
+  }, [searchParams]);
 
-    return (
-        <main>
-            <div className={css.container}>
-                <form className={css.form}>
-                    <input
-                        className={css.input}
-                        // onChange={handleChange}
-                        // value={searchQuery}
-                        type="text"
-                        autoComplete="off"
-                        autoFocus
-                        placeholder="Search movies">
-                    </input>
-                    <button type="submit" className={css.button}>Serach</button>
-                </form>
-            </div>
-        </main>
-    )
-}
+  return (
+    <>
+      <Form setSearchParams={setSearchParams} />
+      {movies.length > 0 && <FilmList movies={movies} />}
+    </>
+  );
+};
 
 export default Movies;
