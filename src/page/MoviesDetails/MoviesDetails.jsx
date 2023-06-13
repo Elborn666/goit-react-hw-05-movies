@@ -58,7 +58,7 @@ const MoviesDetails = () => {
           </div>
         </div>
       </div>
-      <div className={css.container}>
+      <div className={css.container_other}>
         <h6 className={css.title}>Additional information</h6>
         <ul className={css.list}>
           <li className={css.item}>
